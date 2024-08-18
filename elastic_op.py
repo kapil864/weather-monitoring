@@ -1,7 +1,8 @@
 from elasticsearch import Elasticsearch
+import json
 
 
-def connect_elasticsearch(hosts, username, password):
+def connect_elasticsearch(hosts: str, username: str, password: str):
     """
     Connects to Elasticsearch cluster.
 
@@ -24,7 +25,7 @@ def connect_elasticsearch(hosts, username, password):
         return None
 
 
-def send_document(es, index, document):
+def send_document(es: Elasticsearch, index: str, document: dict):
     """
     Sends a document to a specified Elasticsearch index.
 
@@ -38,3 +39,12 @@ def send_document(es, index, document):
         print(f"Document sent to index {index} with ID {response['_id']}")
     except Exception as e:
         print(f"Error sending document to Elasticsearch: {e}")
+
+def load_query():
+    file = open('query.json', 'r')
+    query = json.load(file)
+    file.close()
+    return query
+
+def execute_query(es : Elasticsearch, index: str, query: dict):
+    return es.search(index=index, body=query)

@@ -1,0 +1,40 @@
+{
+    "size": 0,
+    "query": {
+        "range": {
+            "timestamp": {
+                "gte": "now-24h"
+            }
+        }
+    },
+    "aggs": {
+        "cities": {
+            "terms": {
+                "field": "city.keyword"
+            },
+            "aggs": {
+                "avg_temp": {
+                    "avg": {
+                        "field": "temp"
+                    }
+                },
+                "min_temp": {
+                    "min": {
+                        "field": "temp"
+                    }
+                },
+                "max_temp": {
+                    "max": {
+                        "field": "temp"
+                    }
+                },
+                "dominant_weather": {
+                    "terms": {
+                        "field": "main.keyword",
+                        "size": 1
+                    }
+                }
+            }
+        }
+    }
+}
