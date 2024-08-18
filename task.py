@@ -11,12 +11,11 @@ def call_weather_api(token: str, city: str, units: str = 'standard'):
     return response.json()
 
 
-
 def create_data(content):
     return {
-    'temp':content['main']['temp'],
-    'main':content['weather'][0]['main'],
-    'feels_like':content['main']['feels_like'],
-    'timestamp':datetime.datetime.fromtimestamp(content['dt'], datetime.timezone.utc),
-    'city':content['name']
+        'temp': content['main']['temp'],
+        'main': content['weather'][0]['main'],
+        'feels_like': content['main']['feels_like'],
+        'timestamp': datetime.datetime.fromtimestamp(content['dt'], datetime.timezone.utc),
+        'city': content['name']
     }

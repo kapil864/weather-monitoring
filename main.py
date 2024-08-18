@@ -4,16 +4,7 @@ from typing import List
 from task import create_data, call_weather_api
 from elastic_op import connect_elasticsearch, send_document
 from apscheduler.schedulers.background import BackgroundScheduler
-from sqlalchemy import func
-
-ELASTIC_URL = 'https://0.0.0.0:9200'
-USERNAME = 'elastic'
-PASSWORD = '123456'
-WEATHER_API_TOKEN = 'dad850f6614d36b0f9bf9d002d078de7'
-CITIES = ['Delhi', 'Mumbai', 'Chennai', 'Bangalore', 'Kolkata', 'Hyderabad']
-SCHEDULE = 60
-DAILY_WEATHER_INDEX = 'weather-17-08-2024'
-
+from config import *
 
 
 async def my_task(cities: List[str] = CITIES):

@@ -13,7 +13,8 @@ def connect_elasticsearch(hosts: str, username: str, password: str):
       An Elasticsearch client instance.
     """
     try:
-        es = Elasticsearch(hosts=hosts, http_auth=(username, password), verify_certs=False)
+        es = Elasticsearch(hosts=hosts, http_auth=(
+            username, password), verify_certs=False)
         if es.ping():
             print("Connected to Elasticsearch")
             return es
@@ -40,11 +41,24 @@ def send_document(es: Elasticsearch, index: str, document: dict):
     except Exception as e:
         print(f"Error sending document to Elasticsearch: {e}")
 
-def load_query():
-    file = open('query.json', 'r')
+
+def load_aggreagate_query():
+    file = open('elastic_queries/aggreate_query.json', 'r')
     query = json.load(file)
     file.close()
     return query
 
-def execute_query(es : Elasticsearch, index: str, query: dict):
+
+def load_delete_query():
+    file = open('elastic_queries/delete_query.json', 'r')
+    query = json.load(file)
+    file.close()
+    return query
+
+
+def execute_delete_query(es: Elasticsearch, index: str, query: dict):
+    return es.delete_by_query(index=index, body=query)
+
+
+def execute_search_query(es: Elasticsearch, index: str, query: dict):
     return es.search(index=index, body=query)

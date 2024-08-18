@@ -1,21 +1,22 @@
 import datetime
-from elastic_op import connect_elasticsearch, send_document, load_query, execute_query
+from config import *
 
-ELASTIC_URL = 'https://0.0.0.0:9200'
-USERNAME = 'elastic'
-PASSWORD = '123456'
-WEATHER_API_TOKEN = 'dad850f6614d36b0f9bf9d002d078de7'
-CITIES = ['Delhi', 'Mumbai', 'Chennai', 'Bangalore', 'Kolkata', 'Hyderabad']
-SCHEDULE = 60
-DAILY_WEATHER_INDEX = 'weather-*'
-SUMMARY_INDEX = 'summary'
+from elasticsearch import Elasticsearch
+from elastic_op import (
+    connect_elasticsearch,
+    send_document,
+    load_aggreagate_query,
+    execute_search_query,
+    execute_delete_query,
+    load_delete_query)
 
-aggregate_query = load_query()
+aggregate_query = load_aggreagate_query()
+delete_query = load_delete_query()
 
 
 def get_summry():
     es = connect_elasticsearch(ELASTIC_URL, USERNAME, PASSWORD)
-    result = execute_query(es, DAILY_WEATHER_INDEX, aggregate_query)
+    result = execute_search_query(es, DAILY_WEATHER_INDEX, aggregate_query)
     summary = []
     if result.meta.status == 200:
         for aggreates in result["aggregations"]["cities"]["buckets"]:
@@ -32,12 +33,20 @@ def get_summry():
     return summary
 
 
+def delete_old_data(es: Elasticsearch):
+    response = execute_delete_query(
+        es, index=DAILY_WEATHER_INDEX, query=delete_query)
+    if response.meta.status == 200:
+        print("Old data deleted")
+
+
 def send_summary_to_elastic():
     summaries = get_summry()
     if len(summaries) != 0:
         es = connect_elasticsearch(ELASTIC_URL, USERNAME, PASSWORD)
         for summary in summaries:
             send_document(es, index=SUMMARY_INDEX, document=summary)
+        # delete_old_data(es)
         es.close()
 
 

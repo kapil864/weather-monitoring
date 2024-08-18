@@ -1,0 +1,9 @@
+{
+    "query": {
+        "range": {
+            "timestamp": {
+                "lte": "now-24h"
+            }
+        }
+    }
+}
