@@ -46,7 +46,7 @@ def send_summary_to_elastic():
         es = connect_elasticsearch(ELASTIC_URL, USERNAME, PASSWORD)
         for summary in summaries:
             send_document(es, index=SUMMARY_INDEX, document=summary)
-        # delete_old_data(es)
+        delete_old_data(es)
         es.close()
 
 

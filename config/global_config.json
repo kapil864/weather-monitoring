@@ -11,7 +11,8 @@
         "Kolkata",
         "Hyderabad"
     ],
-    "SCHEDULE_IN_SECOND": 60,
-    "DAILY_WEATHER_INDEX": "weather-*",
-    "SUMMARY_INDEX": "summary"
+    "SCHEDULE_IN_SECOND": 300,
+    "DAILY_WEATHER_INDEX": "weather",
+    "SUMMARY_INDEX": "summary",
+    "TEMPERATURE_UNIT": "metric"
 }

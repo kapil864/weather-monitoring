@@ -22,6 +22,7 @@ def load_config():
     global SCHEDULE
     global DAILY_WEATHER_INDEX
     global SUMMARY_INDEX
+    global TEMPERATURE_UNIT
     ELASTIC_URL = config["ELASTIC_URL"]
     USERNAME = config["USERNAME"]
     PASSWORD = config["PASSWORD"]
@@ -30,6 +31,7 @@ def load_config():
     SCHEDULE = config["SCHEDULE_IN_SECOND"]
     DAILY_WEATHER_INDEX = config["DAILY_WEATHER_INDEX"]
     SUMMARY_INDEX = config["SUMMARY_INDEX"]
+    TEMPERATURE_UNIT = config["TEMPERATURE_UNIT"]
 
 
 load_config()

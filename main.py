@@ -3,7 +3,6 @@ import aioschedule as schedule
 from typing import List
 from task import create_data, call_weather_api
 from elastic_op import connect_elasticsearch, send_document
-from apscheduler.schedulers.background import BackgroundScheduler
 from config import *
 
 
